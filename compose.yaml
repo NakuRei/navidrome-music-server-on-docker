@@ -1,0 +1,17 @@
+services:
+  navidrome:
+    container_name: navidrome
+    image: deluan/navidrome:latest
+    restart: unless-stopped
+    user: 1000:1000
+    ports:
+      - "45335:4533"  # Navidromeのポート
+    volumes:
+      - /mnt/nas_buffalo:/music:ro  # NASをマウントした音楽フォルダ（読み取り専用）
+      - ./data:/data  # 設定・再生履歴・プレイリストの保存先
+    environment:
+      - ND_SCANINTERVAL=1h  # 音楽の再スキャン間隔
+      - ND_LOGLEVEL=info
+      - ND_SESSIONTIMEOUT=24h
+      - ND_MUSICFOLDER=/music
+      - ND_BASEURL=
